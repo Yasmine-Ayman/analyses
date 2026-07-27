@@ -1,0 +1,20 @@
+#!/bin/bash
+#SBATCH -t 0-4:00 # 0-6:30
+#SBATCH -p short
+#SBATCH -J trial_reliability
+#SBATCH -o trial_reliability_%j.log
+#SBATCH -e trial_reliability_%j.log
+#SBATCH -c 1
+#SBATCH --mem=100GB
+
+mouse=$1
+date=$2
+session=$3
+options=$4
+
+echo "Performing trial reliability computation for ${mouse} ${date} ${session}."
+
+module load conda/miniforge3
+conda activate mouse_imaging_rhel
+
+python $CODE/analyses/trial_reliability.py --mouse $mouse --date $date --session $session --ops $options 
